@@ -22,14 +22,12 @@ def collect_and_process_data():
     data = np.loadtxt(file_name, dtype=str, delimiter=',', skiprows=1)
     data = np.core.defchararray.replace(data, ' C', '')
     data = data.astype('int')
-    bool_arr1 = []
-    bool_arr2 = []
-    bool_arr3 = []
-    for i in data[:, 0]:
-        bool_arr1.append(i == 1)
-        bool_arr2.append(i == 2)
-        bool_arr3.append(i == 3)
-    month1_data = data[bool_arr1]
+    # 用bool数组数据清洗
+    bool_arr1 = data[:, 0] == 1
+    bool_arr2 = data[:, 0] == 2
+    bool_arr3 = data[:, 0] == 3
+    # 等价于下面
+    month1_data = data[data[:, 0] == 1]
     month2_data = data[bool_arr2]
     month3_data = data[bool_arr3]
     # print(month1_data[0])
@@ -57,7 +55,7 @@ def show_data(data_list):
     ax2.set_title('2')
     ax2.set_ylabel('Count')
 
-    ax3.hist(data_list[2], range=d_range, bins=d_bins, stacked=True,facecolor='g')
+    ax3.hist(data_list[2], range=d_range, bins=d_bins, stacked=True, facecolor='g')
     ax3.set_xticks(edgs)
     ax3.set_title('3')
     ax3.set_ylabel('Count')
